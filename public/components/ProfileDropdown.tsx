@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronCircleDown } from '@fortawesome/free-solid-svg-icons'
 import cx from 'classnames'
 
+import useCurrentUser from 'hooks/useCurrentUser'
 import GoogleSignInForm from './GoogleSignInForm'
 
 import styles from 'styles/components/ProfileDropdown.module.scss'
@@ -10,6 +11,8 @@ import styles from 'styles/components/ProfileDropdown.module.scss'
 const ProfileDropdown = () => {
 	const contentRef = useRef<HTMLDivElement | null>(null)
 	const [isShowing, setIsShowing] = useState(false)
+	
+	const user = useCurrentUser()
 	
 	const show = useCallback(() => {
 		setIsShowing(true)
@@ -33,7 +36,7 @@ const ProfileDropdown = () => {
 		
 		return () => body.removeEventListener('click', onBodyClick)
 	}, [isShowing, onBodyClick])
-	
+	console.log(user)
 	return (
 		<div className={styles.root}>
 			<button className={styles.trigger} onClick={show}>
@@ -51,7 +54,10 @@ const ProfileDropdown = () => {
 					[styles.showing]: isShowing
 				})}
 			>
-				<GoogleSignInForm isFocused={isShowing} />
+				{user
+					? user.displayName
+					: <GoogleSignInForm isFocused={isShowing} />
+				}
 			</div>
 		</div>
 	)

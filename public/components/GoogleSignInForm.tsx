@@ -62,7 +62,7 @@ const GoogleSignInButton = ({ isFocused }: { isFocused: boolean }) => {
 			if (code !== 'auth/popup-closed-by-user')
 				toast.error(message)
 		}
-	}, [setIsLoading])
+	}, [name, setIsLoading])
 	
 	const signUp = useCallback((event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
