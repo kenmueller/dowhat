@@ -1,4 +1,7 @@
 .root {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 	padding: 24px 30px;
 	background: #212842;
 	box-shadow: 0 0 20px 5px #131931;
@@ -13,4 +16,25 @@
 
 .what {
 	color: #e43f77;
+}
+
+.profileButton {
+	display: flex;
+	align-items: center;
+	padding: 8px 16px;
+	color: white;
+	background: transparentize(white, 0.9);
+	border-radius: 8px;
+	outline: none;
+	transition: background 0.3s;
+	
+	&:hover {
+		background: transparentize(white, 0.8);
+	}
+}
+
+.profileName {
+	margin-right: 8px;
+	font-size: 16px;
+	font-weight: 900;
 }
