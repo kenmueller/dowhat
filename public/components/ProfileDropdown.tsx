@@ -51,7 +51,7 @@ const ProfileDropdown = () => {
 					[styles.showing]: isShowing
 				})}
 			>
-				<GoogleSignInForm />
+				<GoogleSignInForm isFocused={isShowing} />
 			</div>
 		</div>
 	)

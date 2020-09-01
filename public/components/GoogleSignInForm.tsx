@@ -2,6 +2,7 @@ import { useState, useCallback, FormEvent, ChangeEvent, useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
+import cx from 'classnames'
 
 import firebase from 'lib/firebase'
 
@@ -16,7 +17,7 @@ const firestore = firebase.firestore()
 const provider = new firebase.auth.GoogleAuthProvider()
 provider.addScope('https://www.googleapis.com/auth/userinfo.email')
 
-const GoogleSignInButton = () => {
+const GoogleSignInButton = ({ isFocused }: { isFocused: boolean }) => {
 	const [isLoading, setIsLoading] = useState(false)
 	const [isNameValidationLoading, setIsNameValidationLoading] = useState(false)
 	
@@ -97,9 +98,14 @@ const GoogleSignInButton = () => {
 		return () => { shouldContinue = false }
 	}, [name])
 	
+	const onNameInputRef = useCallback((input: HTMLInputElement | null) => {
+		input?.[isFocused ? 'focus' : 'blur']()
+	}, [isFocused])
+	
 	return (
 		<form onSubmit={signIn}>
 			<input
+				ref={onNameInputRef}
 				className={styles.nameInput}
 				required
 				placeholder="Username"
@@ -107,7 +113,7 @@ const GoogleSignInButton = () => {
 				onChange={onNameInputChange}
 			/>
 			<button
-				className={styles.button}
+				className={cx(styles.button, { [styles.loading]: isLoading })}
 				disabled={isLoading || isNameValidationLoading || !isNameValid}
 			>
 				<FontAwesomeIcon

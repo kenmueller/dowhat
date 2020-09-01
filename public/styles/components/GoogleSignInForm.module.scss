@@ -19,9 +19,9 @@
 	color: white;
 	background: transparentize(white, 0.9);
 	border-radius: 8px;
-	transition: background 0.3s;
+	transition: background 0.3s, opacity 0.3s;
 	
-	&:disabled {
+	&:not(.loading):disabled {
 		opacity: 0.5;
 	}
 	
