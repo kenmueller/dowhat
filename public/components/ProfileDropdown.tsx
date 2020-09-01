@@ -19,7 +19,7 @@ const ProfileDropdown = () => {
 		const content = contentRef.current
 		const { target } = event
 		
-		if (!(content === target || content.contains(target as Node)))
+		if (content && !(content === target || content.contains(target as Node)))
 			setIsShowing(false)
 	}, [contentRef, setIsShowing])
 	
