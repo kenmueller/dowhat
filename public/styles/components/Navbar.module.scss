@@ -17,24 +17,3 @@
 .what {
 	color: #e43f77;
 }
-
-.profileButton {
-	display: flex;
-	align-items: center;
-	padding: 8px 16px;
-	color: white;
-	background: transparentize(white, 0.9);
-	border-radius: 8px;
-	outline: none;
-	transition: background 0.3s;
-	
-	&:hover {
-		background: transparentize(white, 0.8);
-	}
-}
-
-.profileName {
-	margin-right: 8px;
-	font-size: 16px;
-	font-weight: 900;
-}
