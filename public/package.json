@@ -12,9 +12,11 @@
 		"@fortawesome/free-solid-svg-icons": "^5.14.0",
 		"@fortawesome/react-fontawesome": "^0.1.11",
 		"classnames": "^2.2.6",
+		"firebase": "^7.19.1",
 		"next": "^9.5.2",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
+		"react-toastify": "^6.0.8",
 		"sass": "^1.26.10"
 	},
 	"devDependencies": {

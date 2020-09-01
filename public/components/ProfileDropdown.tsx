@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronCircleDown } from '@fortawesome/free-solid-svg-icons'
 import cx from 'classnames'
 
-import GoogleSignInButton from './GoogleSignInButton'
+import GoogleSignInForm from './GoogleSignInForm'
 
 import styles from 'styles/components/ProfileDropdown.module.scss'
 
@@ -51,7 +51,7 @@ const ProfileDropdown = () => {
 					[styles.showing]: isShowing
 				})}
 			>
-				<GoogleSignInButton />
+				<GoogleSignInForm />
 			</div>
 		</div>
 	)
