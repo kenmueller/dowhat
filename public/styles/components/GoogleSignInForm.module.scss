@@ -1,3 +1,29 @@
+@use '../spinner' as *;
+
+.nameLabel {
+	font-weight: 900;
+	color: white;
+}
+
+.nameLabelSpinner {
+	@include spinner($size: 16px, $thickness: 3px);
+	
+	margin: 0 8px -2px 0;
+}
+
+.nameLabelIcon {
+	height: 20px;
+	margin: 0 8px -4px 0;
+}
+
+.validName {
+	color: #c3e88d;
+}
+
+.invalidName {
+	color: #ff6464;
+}
+
 .nameInput {
 	width: 100%;
 	margin: 8px 0 20px;
@@ -25,12 +51,8 @@
 		opacity: 0.5;
 	}
 	
-	&:not(:disabled) {
+	&:not(:disabled):hover {
 		background: #e43f77;
-		
-		&:hover {
-			background: transparentize(white, 0.9);
-		}
 	}
 }
 

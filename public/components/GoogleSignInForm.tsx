@@ -1,10 +1,12 @@
 import { useState, useCallback, FormEvent, ChangeEvent, useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import cx from 'classnames'
 
 import firebase from 'lib/firebase'
+import Spinner from './Spinner'
 
 import styles from 'styles/components/GoogleSignInForm.module.scss'
 
@@ -104,6 +106,30 @@ const GoogleSignInButton = ({ isFocused }: { isFocused: boolean }) => {
 	
 	return (
 		<form onSubmit={signIn}>
+			<label className={styles.nameLabel}>
+				{name
+					? isNameValidationLoading
+						? (
+							<>
+								<Spinner className={styles.nameLabelSpinner} />
+								Checking availability...
+							</>
+						)
+						: (
+							<>
+								<FontAwesomeIcon
+									className={cx(
+										styles.nameLabelIcon,
+										styles[isNameValid ? 'validName' : 'invalidName']
+									)}
+									icon={isNameValid ? faCheckCircle : faTimesCircle}
+								/>
+								{isNameValid ? 'Available' : 'Taken'}
+							</>
+						)
+					: 'Must be unique'
+				}
+			</label>
 			<input
 				ref={onNameInputRef}
 				className={styles.nameInput}
