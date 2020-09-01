@@ -2,7 +2,6 @@ import { useState, useCallback, FormEvent, ChangeEvent, useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
-import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import cx from 'classnames'
 
 import firebase from 'lib/firebase'
@@ -26,10 +25,8 @@ const GoogleSignInButton = ({ isFocused }: { isFocused: boolean }) => {
 	const [name, setName] = useState('')
 	const [isNameValid, setIsNameValid] = useState(false)
 	
-	const signIn = useCallback(async (event: FormEvent<HTMLFormElement>) => {
+	const authenticate = useCallback(async (newUser: boolean) => {
 		try {
-			event.preventDefault()
-			
 			const {
 				user,
 				additionalUserInfo
@@ -40,6 +37,11 @@ const GoogleSignInButton = ({ isFocused }: { isFocused: boolean }) => {
 			
 			if (!user.email)
 				throw new Error('Unable to get your email address')
+			
+			if (additionalUserInfo.isNewUser && !newUser) {
+				toast.error('You don\'t have an account yet. Sign up instead.')
+				return
+			}
 			
 			if (!additionalUserInfo.isNewUser)
 				return
@@ -61,6 +63,15 @@ const GoogleSignInButton = ({ isFocused }: { isFocused: boolean }) => {
 				toast.error(message)
 		}
 	}, [setIsLoading])
+	
+	const signUp = useCallback((event: FormEvent<HTMLFormElement>) => {
+		event.preventDefault()
+		authenticate(true)
+	}, [authenticate])
+	
+	const signIn = useCallback(() => {
+		authenticate(false)
+	}, [authenticate])
 	
 	const onNameInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
 		setName(event.target.value)
@@ -105,7 +116,7 @@ const GoogleSignInButton = ({ isFocused }: { isFocused: boolean }) => {
 	}, [isFocused])
 	
 	return (
-		<form onSubmit={signIn}>
+		<form onSubmit={signUp}>
 			<label className={styles.nameLabel}>
 				{name
 					? isNameValidationLoading
@@ -133,7 +144,6 @@ const GoogleSignInButton = ({ isFocused }: { isFocused: boolean }) => {
 			<input
 				ref={onNameInputRef}
 				className={styles.nameInput}
-				required
 				placeholder="Username"
 				value={name}
 				onChange={onNameInputChange}
@@ -142,13 +152,20 @@ const GoogleSignInButton = ({ isFocused }: { isFocused: boolean }) => {
 				className={cx(styles.button, { [styles.loading]: isLoading })}
 				disabled={isLoading || isNameValidationLoading || !isNameValid}
 			>
-				<FontAwesomeIcon
-					className={styles.buttonIcon}
-					icon={faGoogle}
-				/>
-				<p className={styles.buttonMessage}>
-					Sign in with Google
-				</p>
+				Sign up
+			</button>
+			<div className={styles.divider}>
+				<span className={styles.dividerBar} />
+				<span className={styles.dividerMessage}>or</span>
+				<span className={styles.dividerBar} />
+			</div>
+			<button
+				className={cx(styles.button, { [styles.loading]: isLoading })}
+				type="button"
+				disabled={isLoading}
+				onClick={signIn}
+			>
+				Sign in
 			</button>
 		</form>
 	)
